@@ -1,8 +1,8 @@
 package testing
 
 import (
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/utils/openstack/clientconfig"
+	"github.com/huaweicloudsdk/golangsdk"
+	"github.com/golangsdk/utils/openstack/clientconfig"
 )
 
 var CloudYAMLHawaii = clientconfig.Cloud{
@@ -49,7 +49,7 @@ var CloudYAML = clientconfig.Clouds{
 	},
 }
 
-var HawaiiAuthOpts = &gophercloud.AuthOptions{
+var HawaiiAuthOpts = &golangsdk.AuthOptions{
 	IdentityEndpoint: "https://hi.example.com:5000/v3",
 	Username:         "jdoe",
 	Password:         "password",

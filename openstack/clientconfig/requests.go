@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack"
+	"github.com/huaweicloudsdk/golangsdk"
+	"github.com/huaweicloudsdk/golangsdk/openstack"
 
 	"gopkg.in/yaml.v2"
 )
@@ -77,11 +77,11 @@ func GetCloudFromYAML(opts *ClientOpts) (*Cloud, error) {
 	return cloud, nil
 }
 
-// AuthOptions creates a gophercloud identity.AuthOptions structure with the
+// AuthOptions creates a golangsdk identity.AuthOptions structure with the
 // settings found in a specific cloud entry of a clouds.yaml file.
 // See http://docs.openstack.org/developer/os-client-config and
 // https://github.com/openstack/os-client-config/blob/master/os_client_config/config.py.
-func AuthOptions(opts *ClientOpts) (*gophercloud.AuthOptions, error) {
+func AuthOptions(opts *ClientOpts) (*golangsdk.AuthOptions, error) {
 	// Get the requested cloud.
 	cloud, err := GetCloudFromYAML(opts)
 	if err != nil {
@@ -90,8 +90,8 @@ func AuthOptions(opts *ClientOpts) (*gophercloud.AuthOptions, error) {
 
 	auth := cloud.Auth
 
-	// Create a gophercloud.AuthOptions struct based on the clouds.yaml entry.
-	ao := &gophercloud.AuthOptions{
+	// Create a golangsdk.AuthOptions struct based on the clouds.yaml entry.
+	ao := &golangsdk.AuthOptions{
 		IdentityEndpoint: auth.AuthURL,
 		Username:         auth.Username,
 		Password:         auth.Password,
@@ -170,17 +170,17 @@ func AuthOptions(opts *ClientOpts) (*gophercloud.AuthOptions, error) {
 
 	// Check for absolute minimum requirements.
 	if ao.IdentityEndpoint == "" {
-		err := gophercloud.ErrMissingInput{Argument: "authURL"}
+		err := golangsdk.ErrMissingInput{Argument: "authURL"}
 		return nil, err
 	}
 
 	if ao.Username == "" {
-		err := gophercloud.ErrMissingInput{Argument: "username"}
+		err := golangsdk.ErrMissingInput{Argument: "username"}
 		return nil, err
 	}
 
 	if ao.Password == "" {
-		err := gophercloud.ErrMissingInput{Argument: "password"}
+		err := golangsdk.ErrMissingInput{Argument: "password"}
 		return nil, err
 	}
 
@@ -189,7 +189,7 @@ func AuthOptions(opts *ClientOpts) (*gophercloud.AuthOptions, error) {
 
 // AuthenticatedClient is a convenience function to get a new provider client
 // based on a clouds.yaml entry.
-func AuthenticatedClient(opts *ClientOpts) (*gophercloud.ProviderClient, error) {
+func AuthenticatedClient(opts *ClientOpts) (*golangsdk.ProviderClient, error) {
 	ao, err := AuthOptions(opts)
 	if err != nil {
 		return nil, err
@@ -199,7 +199,7 @@ func AuthenticatedClient(opts *ClientOpts) (*gophercloud.ProviderClient, error) 
 }
 
 // NewServiceClient is a convenience function to get a new service client.
-func NewServiceClient(service string, opts *ClientOpts) (*gophercloud.ServiceClient, error) {
+func NewServiceClient(service string, opts *ClientOpts) (*golangsdk.ServiceClient, error) {
 	cloud, err := GetCloudFromYAML(opts)
 	if err != nil {
 		return nil, err
@@ -227,7 +227,7 @@ func NewServiceClient(service string, opts *ClientOpts) (*gophercloud.ServiceCli
 		region = v
 	}
 
-	eo := gophercloud.EndpointOpts{
+	eo := golangsdk.EndpointOpts{
 		Region: region,
 	}
 

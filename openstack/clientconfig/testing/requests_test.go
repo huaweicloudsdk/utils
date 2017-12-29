@@ -4,9 +4,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/gophercloud/utils/openstack/clientconfig"
+	"github.com/golangsdk/utils/openstack/clientconfig"
 
-	th "github.com/gophercloud/gophercloud/testhelper"
+	th "github.com/huaweicloudsdk/golangsdk/testhelper"
 )
 
 func TestGetCloudFromYAML(t *testing.T) {
